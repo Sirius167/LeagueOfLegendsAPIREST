@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>League of Legends — Explorador de Campeones</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-bg"></div>
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion-icons/Aatrox.png"
+             alt="LoL Logo" class="header-icon" onerror="this.style.display='none'">
+        <div class="logo-text">
+          <span class="logo-top">LEAGUE OF LEGENDS</span>
+          <span class="logo-main">CHAMPION CODEX</span>
+        </div>
+      </div>
+      <p class="header-sub">Descubre los guerreros que dan forma al mundo de Runeterra</p>
+    </div>
+    <div class="rune-line"></div>
+  </header>
+
+  <section class="controls-bar">
+    <div class="controls-inner">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Buscar campeón..." autocomplete="off" />
+        <button id="clearSearch" class="clear-btn" title="Limpiar búsqueda">✕</button>
+      </div>
+
+      <div class="filter-wrap">
+        <span class="filter-label">Clase:</span>
+        <div class="tag-filters" id="tagFilters">
+          <button class="tag-btn active" data-tag="all">Todos</button>
+          <button class="tag-btn" data-tag="Fighter">Fighter</button>
+          <button class="tag-btn" data-tag="Mage">Mage</button>
+          <button class="tag-btn" data-tag="Assassin">Assassin</button>
+          <button class="tag-btn" data-tag="Tank">Tank</button>
+          <button class="tag-btn" data-tag="Support">Support</button>
+          <button class="tag-btn" data-tag="Marksman">Marksman</button>
+        </div>
+      </div>
+
+      <div class="sort-wrap">
+        <label for="sortSelect">Ordenar:</label>
+        <select id="sortSelect">
+          <option value="name-asc">Nombre A→Z</option>
+          <option value="name-desc">Nombre Z→A</option>
+          <option value="hp-desc">Mayor HP</option>
+          <option value="attack-desc">Mayor Ataque</option>
+        </select>
+      </div>
+    </div>
+    <div class="results-count" id="resultsCount">Cargando campeones…</div>
+  </section>
+
+  <main class="champion-grid" id="championGrid">
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+
+      <div class="modal-hero">
+        <img id="modalImg" src="" alt="" />
+        <div class="modal-hero-info">
+          <p class="modal-title-label">CAMPEÓN</p>
+          <h2 id="modalName"></h2>
+          <p id="modalTitle" class="modal-title-text"></p>
+          <div class="modal-tags" id="modalTags"></div>
+          <p class="modal-resource" id="modalResource"></p>
+        </div>
+      </div>
+
+      <p id="modalBlurb" class="modal-blurb"></p>
+
+      <div class="modal-stats-grid">
+        <div class="stat-block">
+          <span class="stat-name">HP Base</span>
+          <span class="stat-val" id="mHP"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barHP"></div></div>
+        </div>
+        <div class="stat-block">
+          <span class="stat-name">Daño Ataque</span>
+          <span class="stat-val" id="mAD"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barAD"></div></div>
+        </div>
+        <div class="stat-block">
+          <span class="stat-name">Armadura</span>
+          <span class="stat-val" id="mArmor"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barArmor"></div></div>
+        </div>
+        <div class="stat-block">
+          <span class="stat-name">Res. Mágica</span>
+          <span class="stat-val" id="mMR"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barMR"></div></div>
+        </div>
+        <div class="stat-block">
+          <span class="stat-name">Vel. Movimiento</span>
+          <span class="stat-val" id="mMS"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barMS"></div></div>
+        </div>
+        <div class="stat-block">
+          <span class="stat-name">Vel. Ataque</span>
+          <span class="stat-val" id="mAS"></span>
+          <div class="stat-bar-wrap"><div class="stat-bar" id="barAS"></div></div>
+        </div>
+      </div>
+
+      <div class="rating-bars">
+        <h3 class="rating-title">Ratings del Juego</h3>
+        <div class="rating-row">
+          <span>Ataque</span>
+          <div class="rating-track"><div class="rating-fill" id="rAttack"></div></div>
+        </div>
+        <div class="rating-row">
+          <span>Defensa</span>
+          <div class="rating-track"><div class="rating-fill" id="rDefense"></div></div>
+        </div>
+        <div class="rating-row">
+          <span>Magia</span>
+          <div class="rating-track"><div class="rating-fill" id="rMagic"></div></div>
+        </div>
+        <div class="rating-row">
+          <span>Dificultad</span>
+          <div class="rating-track"><div class="rating-fill" id="rDifficulty"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>Datos obtenidos de la API de <strong>Riot Data Dragon</strong> · League of Legends v16.8.1</p>
+    <p class="footer-note">League of Legends © Riot Games. Proyecto educativo Hecho Por Felipe Jaramillo y Ricardo Lora.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
