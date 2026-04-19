@@ -189,4 +189,10 @@ Campeón (datos principales)
 
 
 
+
+<img width="1863" height="934" alt="image" src="https://github.com/user-attachments/assets/37d05ea7-295f-4b37-8682-fe6c241ec76a" />
+
+
+
+
 Hecho por Felipe Jaramillo y Ricardo Lora
